@@ -36,8 +36,6 @@ class ColumnExtension(GObject.GObject, Nautilus.MenuProvider):
         #les variables sont ici pour le dynamisme du dossier
         #variables
         
-        allFavoris=os.listdir(self.favoris)
-        
         if len(files) <= 0:
             return
         
@@ -78,21 +76,25 @@ class ColumnExtension(GObject.GObject, Nautilus.MenuProvider):
         
         itemJMita2.connect('activate', self.menu_activate_cb, listFile)
         count=1
-        for file in allFavoris:
-            p=Properties()
-            p.load(open(self.favoris+file))
-            
-            item=Nautilus.MenuItem(
-                name="MenuExtension::JMita2_Item_"+str(count),
-                label=p["name"],
-                tip=""
-            )
-            
-            item.connect('activate',self.menu_activate_cb_favoris,listFile,p["identifier"])
-            
-            menu.append_item(item)
-            count=count+1
-            
+        
+        if (os.path.exists(self.favoris)):
+        
+            allFavoris=os.listdir(self.favoris)
+            for file in allFavoris:
+                p=Properties()
+                p.load(open(self.favoris+file))
+                
+                item=Nautilus.MenuItem(
+                    name="MenuExtension::JMita2_Item_"+str(count),
+                    label=p["name"],
+                    tip=""
+                )
+                
+                item.connect('activate',self.menu_activate_cb_favoris,listFile,p["identifier"])
+                
+                menu.append_item(item)
+                count=count+1
+                
         menu.append_item(itemAbout)
         
         return [mainItem]

@@ -1,2 +1,5 @@
+version 1.1 : 
+bug fix : N'apparait pas si le dossier de jmita2 n'existe pas
+
 version 1 : 
 Intégration de JMita dans le menu contextuel de Nautilus.
